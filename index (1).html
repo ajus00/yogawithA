@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yoga with Annika</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sage: #7a8c6e;
+      --sage-light: #b5c4a8;
+      --cream: #f5f0e8;
+      --warm-white: #faf8f3;
+      --earth: #8b6f5c;
+      --deep: #2c3320;
+      --gold: #c9a96e;
+      --text: #3a3a2e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(122,140,110,0.15);
+      transition: all .3s;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 300; letter-spacing: .15em;
+      color: var(--deep); text-decoration: none;
+    }
+    .nav-logo span { color: var(--sage); font-style: italic; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text); text-decoration: none; font-weight: 500;
+      position: relative; padding-bottom: 2px;
+      transition: color .3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1px; background: var(--sage);
+      transition: width .3s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: var(--sage); }
+    .nav-cta {
+      background: var(--sage); color: white !important;
+      padding: .55rem 1.4rem !important;
+      border-radius: 2px !important;
+    }
+    .nav-cta:hover { background: var(--deep) !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      position: relative; overflow: hidden;
+    }
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 8rem 4rem 4rem 6rem;
+      position: relative; z-index: 2;
+    }
+    .hero-tag {
+      font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .8s .2s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 300; line-height: 1.1;
+      color: var(--deep);
+      opacity: 0; animation: fadeUp .9s .4s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--sage); }
+    .hero-sub {
+      margin-top: 1.8rem;
+      font-size: 1.05rem; line-height: 1.75;
+      color: #6a6a5e; max-width: 38ch;
+      opacity: 0; animation: fadeUp .9s .6s forwards;
+    }
+    .hero-buttons {
+      margin-top: 2.8rem; display: flex; gap: 1rem;
+      opacity: 0; animation: fadeUp .9s .8s forwards;
+    }
+    .btn-primary {
+      background: var(--sage); color: white;
+      padding: .9rem 2.2rem; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+      border-radius: 2px; text-decoration: none;
+      transition: background .3s, transform .2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--deep); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--deep);
+      padding: .9rem 2.2rem; border: 1px solid var(--deep);
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+      border-radius: 2px; text-decoration: none;
+      transition: all .3s; display: inline-block;
+    }
+    .btn-outline:hover { background: var(--deep); color: white; }
+
+    .hero-stats {
+      margin-top: 4rem; display: flex; gap: 3rem;
+      opacity: 0; animation: fadeUp .9s 1s forwards;
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem; font-weight: 300; color: var(--deep); line-height: 1;
+    }
+    .stat-label {
+      font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--sage); margin-top: .3rem;
+    }
+
+    .hero-right {
+      position: relative; overflow: hidden;
+    }
+    .hero-img-wrap {
+      width: 100%; height: 100%;
+      background: var(--sage-light);
+      position: relative; overflow: hidden;
+    }
+    .hero-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transform: scale(1.05);
+      animation: slowZoom 12s ease-in-out infinite alternate;
+    }
+    .hero-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--warm-white) 0%, transparent 20%);
+    }
+
+    /* floating badge */
+    .hero-badge {
+      position: absolute; bottom: 3rem; right: 3rem;
+      background: white; border-radius: 50%;
+      width: 130px; height: 130px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(44,51,32,.12);
+      animation: float 4s ease-in-out infinite;
+      z-index: 3;
+    }
+    .hero-badge .badge-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300; color: var(--deep); line-height: 1;
+    }
+    .hero-badge .badge-text {
+      font-size: .62rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--sage); text-align: center; margin-top: .2rem;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-section {
+      background: var(--deep); padding: 1.2rem 0; overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; gap: 3rem;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-style: italic; font-weight: 300;
+      color: var(--sage-light); letter-spacing: .08em;
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .marquee-item::after { content: '✦'; color: var(--gold); font-style: normal; font-size: .8rem; }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 80vh; overflow: hidden;
+    }
+    .about-img-side { position: relative; overflow: hidden; }
+    .about-img-side img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .8s ease;
+    }
+    .about-img-side:hover img { transform: scale(1.04); }
+    .about-img-accent {
+      position: absolute; bottom: 3rem; right: -1rem;
+      background: var(--cream); padding: 1.8rem 2.2rem;
+      border-left: 3px solid var(--sage); max-width: 260px;
+      box-shadow: -8px 8px 32px rgba(44,51,32,.1);
+    }
+    .about-img-accent p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 1.1rem; color: var(--deep); line-height: 1.5;
+    }
+    .about-img-accent cite {
+      font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--sage); margin-top: .8rem; display: block; font-style: normal;
+    }
+
+    .about-content {
+      padding: 6rem 5rem; display: flex; flex-direction: column; justify-content: center;
+      background: var(--cream);
+    }
+    .section-tag {
+      font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 1.2rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+      font-weight: 300; line-height: 1.2; color: var(--deep);
+      margin-bottom: 1.8rem;
+    }
+    .section-title em { font-style: italic; color: var(--sage); }
+    .about-content p { font-size: .98rem; line-height: 1.85; color: #6a6a5e; margin-bottom: 1.2rem; }
+
+    .cert-row {
+      margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .cert-pill {
+      background: white; border: 1px solid var(--sage-light);
+      border-radius: 100px; padding: .4rem 1rem;
+      font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    /* ── CLASSES ── */
+    #classes {
+      padding: 7rem 6rem;
+      background: var(--warm-white);
+    }
+    .section-header {
+      text-align: center; margin-bottom: 4rem;
+    }
+    .classes-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .class-card {
+      border-radius: 4px; overflow: hidden;
+      background: white;
+      box-shadow: 0 4px 24px rgba(44,51,32,.07);
+      transition: transform .3s, box-shadow .3s;
+      cursor: pointer;
+    }
+    .class-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(44,51,32,.14);
+    }
+    .class-img {
+      width: 100%; height: 220px; object-fit: cover;
+      display: block;
+    }
+    .class-body { padding: 1.8rem; }
+    .class-level {
+      font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: .6rem;
+    }
+    .class-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 400; color: var(--deep);
+      margin-bottom: .8rem;
+    }
+    .class-desc { font-size: .88rem; line-height: 1.7; color: #7a7a6e; }
+    .class-meta {
+      margin-top: 1.5rem; padding-top: 1.2rem;
+      border-top: 1px solid var(--cream);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .class-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--deep); font-weight: 400;
+    }
+    .class-price span { font-size: .75rem; color: var(--sage); font-family: 'DM Sans', sans-serif; }
+    .class-dur {
+      font-size: .78rem; letter-spacing: .08em;
+      color: var(--sage); text-transform: uppercase;
+    }
+
+    /* ── BOOKING ── */
+    #booking {
+      padding: 7rem 6rem;
+      background: var(--cream);
+    }
+    .booking-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; margin-top: 3.5rem;
+    }
+
+    /* Calendar */
+    .calendar-wrap {
+      background: white; border-radius: 6px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 24px rgba(44,51,32,.07);
+    }
+    .cal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .cal-month {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; color: var(--deep);
+    }
+    .cal-nav {
+      background: none; border: 1px solid var(--sage-light);
+      width: 34px; height: 34px; border-radius: 50%;
+      cursor: pointer; color: var(--sage); font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .cal-nav:hover { background: var(--sage); color: white; border-color: var(--sage); }
+    .cal-weekdays {
+      display: grid; grid-template-columns: repeat(7,1fr);
+      margin-bottom: 1rem;
+    }
+    .cal-weekday {
+      text-align: center; font-size: .68rem;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--sage); padding: .3rem;
+    }
+    .cal-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+    .cal-day {
+      text-align: center; padding: .55rem .2rem;
+      border-radius: 4px; cursor: pointer;
+      font-size: .88rem; color: var(--text);
+      transition: all .2s; position: relative;
+    }
+    .cal-day:hover:not(.empty):not(.past) {
+      background: var(--sage-light); color: var(--deep);
+    }
+    .cal-day.has-class::after {
+      content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+      width: 4px; height: 4px; border-radius: 50%; background: var(--sage);
+    }
+    .cal-day.selected { background: var(--sage) !important; color: white !important; }
+    .cal-day.selected::after { background: white !important; }
+    .cal-day.past { color: #ccc; cursor: default; }
+    .cal-day.today { font-weight: 600; color: var(--earth); }
+    .cal-day.empty { cursor: default; }
+
+    /* Slots */
+    .slots-panel {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .slots-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; color: var(--deep); margin-bottom: .5rem;
+    }
+    .slot-card {
+      background: white; border-radius: 6px; padding: 1.4rem 1.6rem;
+      border: 1px solid transparent;
+      box-shadow: 0 2px 12px rgba(44,51,32,.06);
+      cursor: pointer; transition: all .25s;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .slot-card:hover { border-color: var(--sage); transform: translateX(4px); }
+    .slot-card.booked { opacity: .45; cursor: not-allowed; }
+    .slot-card.booked:hover { transform: none; border-color: transparent; }
+    .slot-info {}
+    .slot-time {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; color: var(--deep);
+    }
+    .slot-type { font-size: .78rem; color: var(--sage); margin-top: .2rem; }
+    .slot-right { text-align: right; }
+    .slot-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--deep);
+    }
+    .slot-spots { font-size: .72rem; color: #999; margin-top: .2rem; }
+    .slot-btn {
+      margin-top: .8rem; background: var(--sage); color: white;
+      border: none; padding: .4rem 1.1rem; border-radius: 2px;
+      font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer; font-family: 'DM Sans'; transition: background .2s;
+    }
+    .slot-btn:hover { background: var(--deep); }
+
+    /* Modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(44,51,32,.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: white; border-radius: 8px; padding: 3rem;
+      width: 100%; max-width: 480px;
+      animation: fadeUp .4s ease forwards;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: #999; transition: color .2s;
+    }
+    .modal-close:hover { color: var(--deep); }
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; color: var(--deep); margin-bottom: .5rem;
+    }
+    .modal-sub { font-size: .88rem; color: var(--sage); margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block; font-size: .75rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--sage); margin-bottom: .4rem;
+    }
+    .form-group input, .form-group select {
+      width: 100%; padding: .75rem 1rem;
+      border: 1px solid #e0ddd5; border-radius: 3px;
+      font-family: 'DM Sans'; font-size: .9rem; color: var(--text);
+      background: var(--warm-white);
+      transition: border-color .2s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none; border-color: var(--sage);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .modal-submit {
+      width: 100%; padding: 1rem; background: var(--sage); color: white;
+      border: none; border-radius: 3px; font-family: 'DM Sans';
+      font-size: .85rem; letter-spacing: .12em; text-transform: uppercase;
+      cursor: pointer; margin-top: .5rem;
+      transition: background .2s;
+    }
+    .modal-submit:hover { background: var(--deep); }
+
+    /* Success */
+    .success-state {
+      text-align: center; padding: 2rem 0;
+    }
+    .success-icon {
+      font-size: 3rem; margin-bottom: 1rem;
+      animation: pop .5s cubic-bezier(.175,.885,.32,1.275) forwards;
+    }
+    .success-state h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; color: var(--deep); margin-bottom: .8rem;
+    }
+    .success-state p { font-size: .9rem; color: #7a7a6e; line-height: 1.7; }
+
+    /* ── GALLERY ── */
+    #gallery {
+      padding: 5rem 6rem;
+      background: var(--warm-white);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 260px 260px;
+      gap: 1rem; margin-top: 3rem;
+    }
+    .gallery-item {
+      overflow: hidden; border-radius: 4px; cursor: pointer;
+      position: relative;
+    }
+    .gallery-item:first-child {
+      grid-column: span 2; grid-row: span 2;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .6s ease;
+      display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.07); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(44,51,32,0);
+      transition: background .3s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-item:hover .gallery-overlay { background: rgba(44,51,32,.25); }
+    .gallery-icon {
+      color: white; font-size: 1.5rem; opacity: 0;
+      transition: opacity .3s;
+    }
+    .gallery-item:hover .gallery-icon { opacity: 1; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials {
+      padding: 7rem 6rem;
+      background: var(--deep); position: relative; overflow: hidden;
+    }
+    #testimonials::before {
+      content: '"';
+      position: absolute; top: -2rem; left: 4rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20rem; color: rgba(255,255,255,.04);
+      line-height: 1; pointer-events: none;
+    }
+    #testimonials .section-tag { color: var(--sage-light); }
+    #testimonials .section-title { color: white; }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 3.5rem;
+    }
+    .testimonial-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 6px; padding: 2rem;
+      transition: background .3s;
+    }
+    .testimonial-card:hover { background: rgba(255,255,255,.1); }
+    .stars { color: var(--gold); font-size: .9rem; margin-bottom: 1.2rem; }
+    .testimonial-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 1.1rem;
+      color: rgba(255,255,255,.8); line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .reviewer { display: flex; align-items: center; gap: .8rem; }
+    .reviewer-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--sage); display: flex; align-items: center;
+      justify-content: center; font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; color: white; flex-shrink: 0;
+    }
+    .reviewer-name { font-size: .85rem; color: rgba(255,255,255,.7); }
+    .reviewer-since { font-size: .72rem; color: rgba(255,255,255,.4); }
+
+    /* ── PRICING ── */
+    #pricing {
+      padding: 7rem 6rem;
+      background: var(--cream);
+    }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 3.5rem;
+    }
+    .pricing-card {
+      background: white; border-radius: 6px;
+      padding: 2.5rem 2rem;
+      border: 1px solid transparent;
+      box-shadow: 0 4px 20px rgba(44,51,32,.06);
+      transition: all .3s; position: relative; overflow: hidden;
+    }
+    .pricing-card:hover { border-color: var(--sage); transform: translateY(-4px); }
+    .pricing-card.featured {
+      background: var(--deep); border-color: var(--deep);
+    }
+    .popular-tag {
+      position: absolute; top: 1.5rem; right: -2rem;
+      background: var(--gold); color: var(--deep);
+      font-size: .62rem; letter-spacing: .12em; text-transform: uppercase;
+      padding: .3rem 3rem; transform: rotate(45deg);
+    }
+    .plan-name {
+      font-size: .75rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: .8rem;
+    }
+    .pricing-card.featured .plan-name { color: var(--sage-light); }
+    .plan-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; color: var(--deep); font-weight: 300;
+      margin-bottom: .3rem;
+    }
+    .pricing-card.featured .plan-price { color: white; }
+    .plan-period {
+      font-size: .8rem; color: #999; margin-bottom: 1.8rem;
+    }
+    .pricing-card.featured .plan-period { color: rgba(255,255,255,.5); }
+    .plan-features { list-style: none; margin-bottom: 2rem; }
+    .plan-features li {
+      font-size: .9rem; padding: .5rem 0;
+      border-bottom: 1px solid var(--cream);
+      color: #6a6a5e; display: flex; align-items: center; gap: .6rem;
+    }
+    .pricing-card.featured .plan-features li {
+      border-color: rgba(255,255,255,.1); color: rgba(255,255,255,.7);
+    }
+    .plan-features li::before { content: '✓'; color: var(--sage); font-weight: 600; }
+    .pricing-card.featured .plan-features li::before { color: var(--gold); }
+    .plan-btn {
+      width: 100%; padding: .9rem;
+      background: var(--sage); color: white; border: none;
+      border-radius: 3px; cursor: pointer; font-family: 'DM Sans';
+      font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
+      transition: background .2s;
+    }
+    .plan-btn:hover { background: var(--deep); }
+    .pricing-card.featured .plan-btn { background: var(--gold); color: var(--deep); }
+    .pricing-card.featured .plan-btn:hover { background: white; }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 7rem 6rem;
+      background: var(--warm-white);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+      align-items: center;
+    }
+    .contact-left {}
+    .contact-info { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon {
+      width: 42px; height: 42px; background: var(--cream);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 1.1rem;
+    }
+    .contact-item-text .label {
+      font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: .2rem;
+    }
+    .contact-item-text .value { font-size: .95rem; color: var(--text); }
+    .social-row { display: flex; gap: 1rem; margin-top: 2.5rem; }
+    .social-link {
+      width: 42px; height: 42px; background: var(--cream);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 1.1rem;
+      transition: background .2s, transform .2s;
+    }
+    .social-link:hover { background: var(--sage); transform: translateY(-3px); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-form input, .contact-form textarea {
+      width: 100%; padding: .9rem 1.2rem;
+      border: 1px solid #e0ddd5; border-radius: 3px;
+      font-family: 'DM Sans'; font-size: .9rem; color: var(--text);
+      background: white; transition: border-color .2s; resize: none;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline: none; border-color: var(--sage);
+    }
+    .contact-form textarea { min-height: 120px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep); padding: 3rem 6rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 300; color: white; letter-spacing: .1em;
+    }
+    .footer-logo span { font-style: italic; color: var(--sage-light); }
+    .footer-copy { font-size: .78rem; color: rgba(255,255,255,.4); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-size: .78rem; color: rgba(255,255,255,.5);
+      text-decoration: none; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--sage-light); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slowZoom {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.12); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes pop {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 7rem 2rem 3rem; }
+      #about { grid-template-columns: 1fr; }
+      .about-img-side { height: 300px; }
+      .about-content { padding: 3rem 2rem; }
+      #classes, #booking, #gallery, #testimonials, #pricing, #contact { padding: 4rem 2rem; }
+      .classes-grid, .testimonials-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .booking-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+      #contact { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">yoga with <span>annika</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#booking">Booking</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#booking" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Certified Yoga Instructor · Jönköping</p>
+    <h1 class="hero-title">
+      Find your<br><em>stillness</em><br>within.
+    </h1>
+    <p class="hero-sub">
+      Slow down. Breathe. Reconnect. Yoga classes rooted in mindfulness, movement, and authentic Scandinavian calm — for all levels.
+    </p>
+    <div class="hero-buttons">
+      <a href="#booking" class="btn-primary">Book a Session</a>
+      <a href="#classes" class="btn-outline">Explore Classes</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Years Teaching</div>
+      </div>
+      <div>
+        <div class="stat-num">100+</div>
+        <div class="stat-label">Students</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=900&q=80&auto=format&fit=crop" alt="Yoga instructor in nature" />
+      <div class="hero-img-overlay"></div>
+    </div>
+    <div class="hero-badge">
+      <div class="badge-num">200h</div>
+      <div class="badge-text">RYT<br>Certified</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item">Hatha Yoga</span>
+    <span class="marquee-item">Vinyasa Flow</span>
+    <span class="marquee-item">Yin Yoga</span>
+    <span class="marquee-item">Meditation</span>
+    <span class="marquee-item">Restorative Yoga</span>
+    <span class="marquee-item">Breathwork</span>
+    <span class="marquee-item">Morning Flow</span>
+    <span class="marquee-item">Power Yoga</span>
+    <span class="marquee-item">Hatha Yoga</span>
+    <span class="marquee-item">Vinyasa Flow</span>
+    <span class="marquee-item">Yin Yoga</span>
+    <span class="marquee-item">Meditation</span>
+    <span class="marquee-item">Restorative Yoga</span>
+    <span class="marquee-item">Breathwork</span>
+    <span class="marquee-item">Morning Flow</span>
+    <span class="marquee-item">Power Yoga</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img-side">
+    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=700&q=80&auto=format&fit=crop" alt="Annika yoga portrait" />
+    <div class="about-img-accent">
+      <p>"Yoga is not about touching your toes. It is about what you learn on the way down."</p>
+      <cite>— Jigar Gor</cite>
+    </div>
+  </div>
+  <div class="about-content">
+    <p class="section-tag reveal">About Annika</p>
+    <h2 class="section-title reveal">Your guide on the <em>mat</em> & beyond</h2>
+    <p class="reveal">Hi, I'm Annika! I've been practicing yoga for over 12 years and teaching for 8, guiding students in Jönköping and online through transformative movement practices.</p>
+    <p class="reveal">My approach blends traditional yoga philosophy with modern body science — creating classes that are both deeply grounding and physically intelligent. Whether you're stepping onto the mat for the first time or deepening an existing practice, you're welcome here.</p>
+    <div class="cert-row reveal">
+      <span class="cert-pill">200h RYT</span>
+      <span class="cert-pill">Yin Yoga</span>
+      <span class="cert-pill">Prenatal Yoga</span>
+      <span class="cert-pill">Meditation</span>
+      <span class="cert-pill">Ayurveda</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSES -->
+<section id="classes">
+  <div class="section-header">
+    <p class="section-tag reveal">What I Offer</p>
+    <h2 class="section-title reveal">Classes for every <em>journey</em></h2>
+  </div>
+  <div class="classes-grid reveal">
+    <div class="class-card">
+      <img class="class-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80&auto=format&fit=crop" alt="Vinyasa Flow" />
+      <div class="class-body">
+        <div class="class-level">All Levels</div>
+        <div class="class-name">Vinyasa Flow</div>
+        <div class="class-desc">A dynamic, breath-linked practice that builds strength, flexibility and presence. Energising and meditative at once.</div>
+        <div class="class-meta">
+          <div class="class-price">350 <span>SEK / class</span></div>
+          <div class="class-dur">⏱ 60 min</div>
+        </div>
+      </div>
+    </div>
+    <div class="class-card">
+      <img class="class-img" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80&auto=format&fit=crop" alt="Yin Yoga" />
+      <div class="class-body">
+        <div class="class-level">Beginner Friendly</div>
+        <div class="class-name">Yin & Restore</div>
+        <div class="class-desc">Long-held, passive postures targeting connective tissue. Perfect for stress relief, flexibility, and deep nervous system calm.</div>
+        <div class="class-meta">
+          <div class="class-price">320 <span>SEK / class</span></div>
+          <div class="class-dur">⏱ 75 min</div>
+        </div>
+      </div>
+    </div>
+    <div class="class-card">
+      <img class="class-img" src="https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=600&q=80&auto=format&fit=crop" alt="Private Session" />
+      <div class="class-body">
+        <div class="class-level">Personalised</div>
+        <div class="class-name">Private Session</div>
+        <div class="class-desc">One-on-one sessions designed entirely around your body, goals and pace. The fastest way to transform your practice.</div>
+        <div class="class-meta">
+          <div class="class-price">850 <span>SEK / session</span></div>
+          <div class="class-dur">⏱ 60 min</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="section-header">
+    <p class="section-tag reveal">Reserve Your Spot</p>
+    <h2 class="section-title reveal">Book a <em>class</em></h2>
+    <p style="color:#7a7a6e;max-width:45ch;margin:0 auto;font-size:.95rem;" class="reveal">Choose a date below to see available sessions. Spots fill quickly — book early!</p>
+  </div>
+  <div class="booking-grid reveal">
+    <div class="calendar-wrap">
+      <div class="cal-header">
+        <button class="cal-nav" id="prevMonth">‹</button>
+        <div class="cal-month" id="calMonth">May 2025</div>
+        <button class="cal-nav" id="nextMonth">›</button>
+      </div>
+      <div class="cal-weekdays">
+        <div class="cal-weekday">Mon</div>
+        <div class="cal-weekday">Tue</div>
+        <div class="cal-weekday">Wed</div>
+        <div class="cal-weekday">Thu</div>
+        <div class="cal-weekday">Fri</div>
+        <div class="cal-weekday">Sat</div>
+        <div class="cal-weekday">Sun</div>
+      </div>
+      <div class="cal-days" id="calDays"></div>
+    </div>
+
+    <div class="slots-panel">
+      <div class="slots-title" id="slotsTitle">Select a date</div>
+      <p id="slotsHint" style="font-size:.88rem;color:#999;">Click on a highlighted date to see available classes.</p>
+      <div id="slotsList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <p class="section-tag reveal">Gallery</p>
+    <h2 class="section-title reveal">Life on the <em>mat</em></h2>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1588286840104-8957b019727f?w=800&q=80&auto=format&fit=crop" alt="Yoga in nature" />
+      <div class="gallery-overlay"><span class="gallery-icon">✦</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&auto=format&fit=crop" alt="Group class" />
+      <div class="gallery-overlay"><span class="gallery-icon">✦</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1510894347713-fc3ed6fdf539?w=600&q=80&auto=format&fit=crop" alt="Meditation" />
+      <div class="gallery-overlay"><span class="gallery-icon">✦</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&q=80&auto=format&fit=crop" alt="Yoga pose" />
+      <div class="gallery-overlay"><span class="gallery-icon">✦</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=600&q=80&auto=format&fit=crop" alt="Outdoor yoga" />
+      <div class="gallery-overlay"><span class="gallery-icon">✦</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-header">
+    <p class="section-tag reveal">Student Love</p>
+    <h2 class="section-title reveal" style="color:white">What students <em>say</em></h2>
+  </div>
+  <div class="testimonials-grid reveal">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Annika's Yin classes have completely changed how I manage stress. Her guidance is gentle, knowledgeable and deeply caring. I leave every session feeling restored."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">S</div>
+        <div>
+          <div class="reviewer-name">Sara Lindqvist</div>
+          <div class="reviewer-since">Student since 2022</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"As a total beginner I was nervous, but Annika made me feel so welcome. Her Vinyasa class is challenging and joyful at the same time. I'm completely hooked!"</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">M</div>
+        <div>
+          <div class="reviewer-name">Magnus Ek</div>
+          <div class="reviewer-since">Student since 2023</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"The private sessions with Annika are invaluable. She sees exactly what your body needs and explains the why behind every posture. Best investment in my wellbeing."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">L</div>
+        <div>
+          <div class="reviewer-name">Lisa Bergström</div>
+          <div class="reviewer-since">Student since 2021</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-header">
+    <p class="section-tag reveal">Pricing</p>
+    <h2 class="section-title reveal">Simple, <em>transparent</em> pricing</h2>
+    <p style="color:#7a7a6e;max-width:45ch;margin:0 auto;font-size:.95rem;" class="reveal">All prices in Swedish Kronor (SEK). No hidden fees.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <div class="plan-name">Drop-in</div>
+      <div class="plan-price">350 <span style="font-size:1.2rem;color:#999">kr</span></div>
+      <div class="plan-period">per class</div>
+      <ul class="plan-features">
+        <li>Single group class</li>
+        <li>All class types</li>
+        <li>Mat included</li>
+        <li>Flexible booking</li>
+      </ul>
+      <button class="plan-btn" onclick="document.querySelector('#booking').scrollIntoView({behavior:'smooth'})">Book a Class</button>
+    </div>
+    <div class="pricing-card featured">
+      <div class="popular-tag">Popular</div>
+      <div class="plan-name">Monthly Pass</div>
+      <div class="plan-price">990 <span style="font-size:1.2rem;color:rgba(255,255,255,.4)">kr</span></div>
+      <div class="plan-period">per month · unlimited group classes</div>
+      <ul class="plan-features">
+        <li>Unlimited group classes</li>
+        <li>Priority booking</li>
+        <li>10% off workshops</li>
+        <li>Online class recordings</li>
+        <li>Community access</li>
+      </ul>
+      <button class="plan-btn" onclick="document.querySelector('#booking').scrollIntoView({behavior:'smooth'})">Get Pass</button>
+    </div>
+    <div class="pricing-card">
+      <div class="plan-name">Private Sessions</div>
+      <div class="plan-price">850 <span style="font-size:1.2rem;color:#999">kr</span></div>
+      <div class="plan-period">per 60-min session</div>
+      <ul class="plan-features">
+        <li>1-on-1 with Annika</li>
+        <li>Fully personalised</li>
+        <li>In-studio or online</li>
+        <li>Injury-conscious</li>
+      </ul>
+      <button class="plan-btn" onclick="document.querySelector('#booking').scrollIntoView({behavior:'smooth'})">Book Private</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <p class="section-tag reveal">Get in Touch</p>
+    <h2 class="section-title reveal">Let's connect <em>off</em> the mat</h2>
+    <div class="contact-info reveal">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-item-text">
+          <div class="label">Studio</div>
+          <div class="value">Jönköping, Sweden</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div class="contact-item-text">
+          <div class="label">Email</div>
+          <div class="value">annika@yogawithannika.se</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-item-text">
+          <div class="label">Instagram</div>
+          <div class="value">@yoga_with_annika</div>
+        </div>
+      </div>
+    </div>
+    <div class="social-row reveal">
+      <a href="https://www.instagram.com/yoga_with_annika/" target="_blank" class="social-link" title="Instagram">📷</a>
+      <a href="#" class="social-link" title="Facebook">📘</a>
+      <a href="#" class="social-link" title="YouTube">▶️</a>
+    </div>
+  </div>
+  <div>
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <input type="text" placeholder="Your name" />
+        <input type="email" placeholder="Email address" />
+      </div>
+      <input type="text" placeholder="Subject" />
+      <textarea placeholder="Your message..."></textarea>
+      <button class="btn-primary" style="width:100%;text-align:center;" onclick="this.textContent='Message sent! ✓';this.style.background='var(--deep)'">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">yoga with <span>annika</span></div>
+  <div class="footer-copy">© 2025 Yoga with Annika. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#classes">Classes</a>
+    <a href="#booking">Book</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modalContent">
+      <div class="modal-title" id="modalTitle">Book Session</div>
+      <div class="modal-sub" id="modalSub">Fill in your details to reserve your spot</div>
+      <div class="contact-form">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="bookName" placeholder="Your name" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="bookEmail" placeholder="Email address" />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" id="bookPhone" placeholder="+46 70 xxx xx xx" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Class</label>
+          <select id="bookClass">
+            <option>Vinyasa Flow — 350 kr</option>
+            <option>Yin & Restore — 320 kr</option>
+            <option>Private Session — 850 kr</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Notes (optional)</label>
+          <input type="text" placeholder="Injuries, special requests..." />
+        </div>
+        <button class="modal-submit" onclick="submitBooking()">Confirm Booking</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── CALENDAR ──
+  const classDays = {
+    1: [{time:'07:30', type:'Morning Vinyasa', price:'350 kr', spots:3, booked:false},
+        {time:'18:00', type:'Yin & Restore', price:'320 kr', spots:8, booked:false}],
+    3: [{time:'09:00', type:'Hatha for Beginners', price:'320 kr', spots:5, booked:false},
+        {time:'19:00', type:'Power Vinyasa', price:'350 kr', spots:2, booked:false}],
+    5: [{time:'07:30', type:'Morning Flow', price:'350 kr', spots:0, booked:true},
+        {time:'12:00', type:'Lunch Yin', price:'320 kr', spots:6, booked:false},
+        {time:'17:30', type:'Evening Vinyasa', price:'350 kr', spots:4, booked:false}],
+    8: [{time:'09:00', type:'Weekend Hatha', price:'350 kr', spots:7, booked:false}],
+    10: [{time:'07:30', type:'Morning Vinyasa', price:'350 kr', spots:3, booked:false},
+         {time:'18:00', type:'Private Session', price:'850 kr', spots:1, booked:false}],
+    12: [{time:'09:00', type:'Yin & Restore', price:'320 kr', spots:8, booked:false},
+         {time:'19:00', type:'Candlelight Yin', price:'350 kr', spots:5, booked:false}],
+    15: [{time:'07:30', type:'Morning Flow', price:'350 kr', spots:2, booked:false},
+         {time:'12:00', type:'Lunch Hatha', price:'320 kr', spots:6, booked:false}],
+    17: [{time:'09:00', type:'Weekend Vinyasa', price:'350 kr', spots:4, booked:false}],
+    19: [{time:'07:30', type:'Morning Vinyasa', price:'350 kr', spots:0, booked:true},
+         {time:'18:00', type:'Evening Yin', price:'320 kr', spots:3, booked:false}],
+    22: [{time:'09:00', type:'Hatha for Beginners', price:'320 kr', spots:6, booked:false},
+         {time:'19:00', type:'Power Vinyasa', price:'350 kr', spots:2, booked:false}],
+    24: [{time:'07:30', type:'Morning Flow', price:'350 kr', spots:5, booked:false},
+         {time:'12:00', type:'Restorative Yoga', price:'320 kr', spots:8, booked:false}],
+    26: [{time:'09:00', type:'Weekend Yin', price:'320 kr', spots:3, booked:false}],
+    29: [{time:'07:30', type:'Morning Vinyasa', price:'350 kr', spots:4, booked:false},
+         {time:'18:00', type:'Private Session', price:'850 kr', spots:1, booked:false}],
+  };
+
+  let currentYear, currentMonth, selectedDay = null;
+  let selectedSlot = null;
+
+  function initCalendar() {
+    const now = new Date();
+    currentYear = now.getFullYear();
+    currentMonth = now.getMonth();
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const months = ['January','February','March','April','May','June',
+                    'July','August','September','October','November','December'];
+    document.getElementById('calMonth').textContent = `${months[currentMonth]} ${currentYear}`;
+
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const offset = firstDay === 0 ? 6 : firstDay - 1;
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const today = new Date();
+
+    let html = '';
+    for (let i = 0; i < offset; i++) html += `<div class="cal-day empty"></div>`;
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(currentYear, currentMonth, d);
+      const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const isToday = d === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear();
+      const hasClass = classDays[d] !== undefined;
+      let cls = 'cal-day';
+      if (isPast) cls += ' past';
+      if (isToday) cls += ' today';
+      if (hasClass && !isPast) cls += ' has-class';
+      if (d === selectedDay) cls += ' selected';
+      html += `<div class="${cls}" ${!isPast ? `onclick="selectDay(${d})"` : ''}>${d}</div>`;
+    }
+    document.getElementById('calDays').innerHTML = html;
+  }
+
+  function selectDay(day) {
+    selectedDay = day;
+    renderCalendar();
+    const months = ['January','February','March','April','May','June',
+                    'July','August','September','October','November','December'];
+    document.getElementById('slotsTitle').textContent = `${months[currentMonth]} ${day}`;
+    document.getElementById('slotsHint').style.display = 'none';
+
+    const slots = classDays[day];
+    const list = document.getElementById('slotsList');
+    if (!slots) {
+      list.innerHTML = '<p style="font-size:.9rem;color:#aaa;padding:1rem 0">No classes scheduled this day.</p>';
+      return;
+    }
+    list.innerHTML = slots.map((s, i) => `
+      <div class="slot-card ${s.booked ? 'booked' : ''}" id="slot_${day}_${i}">
+        <div class="slot-info">
+          <div class="slot-time">${s.time}</div>
+          <div class="slot-type">${s.type}</div>
+        </div>
+        <div class="slot-right">
+          <div class="slot-price">${s.price}</div>
+          <div class="slot-spots">${s.booked ? 'Fully booked' : `${s.spots} spot${s.spots !== 1 ? 's' : ''} left`}</div>
+          ${!s.booked ? `<button class="slot-btn" onclick="openModal('${s.time}', '${s.type}', '${s.price}', ${i})">Book</button>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('prevMonth').onclick = () => {
+    currentMonth--; if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+    selectedDay = null; renderCalendar();
+    document.getElementById('slotsTitle').textContent = 'Select a date';
+    document.getElementById('slotsHint').style.display = '';
+    document.getElementById('slotsList').innerHTML = '';
+  };
+  document.getElementById('nextMonth').onclick = () => {
+    currentMonth++; if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    selectedDay = null; renderCalendar();
+    document.getElementById('slotsTitle').textContent = 'Select a date';
+    document.getElementById('slotsHint').style.display = '';
+    document.getElementById('slotsList').innerHTML = '';
+  };
+
+  initCalendar();
+
+  // ── MODAL ──
+  function openModal(time, type, price, slotIdx) {
+    selectedSlot = { time, type, price, slotIdx };
+    document.getElementById('modalTitle').textContent = type;
+    document.getElementById('modalSub').textContent = `${time} · ${price}`;
+    document.getElementById('bookClass').value = `${type} — ${price}`;
+    document.getElementById('bookingModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('bookingModal').classList.remove('open');
+    document.body.style.overflow = '';
+    // reset
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-title" id="modalTitle">Book Session</div>
+      <div class="modal-sub" id="modalSub">Fill in your details to reserve your spot</div>
+      <div class="contact-form">
+        <div class="form-group"><label>Full Name</label><input type="text" id="bookName" placeholder="Your name" /></div>
+        <div class="form-row">
+          <div class="form-group"><label>Email</label><input type="email" id="bookEmail" placeholder="Email address" /></div>
+          <div class="form-group"><label>Phone</label><input type="tel" id="bookPhone" placeholder="+46 70 xxx xx xx" /></div>
+        </div>
+        <div class="form-group"><label>Class</label>
+          <select id="bookClass">
+            <option>Vinyasa Flow — 350 kr</option>
+            <option>Yin & Restore — 320 kr</option>
+            <option>Private Session — 850 kr</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Notes (optional)</label><input type="text" placeholder="Injuries, special requests..." /></div>
+        <button class="modal-submit" onclick="submitBooking()">Confirm Booking</button>
+      </div>`;
+  }
+  function submitBooking() {
+    const name = document.getElementById('bookName')?.value;
+    if (!name) { alert('Please enter your name.'); return; }
+    document.getElementById('modalContent').innerHTML = `
+      <div class="success-state">
+        <div class="success-icon">🌿</div>
+        <h3>Booking Confirmed!</h3>
+        <p>Thank you, <strong>${name}</strong>! Your spot is reserved.<br>A confirmation will be sent to your email.<br><br>See you on the mat! 🧘</p>
+        <br>
+        <button class="btn-primary" onclick="closeModal()">Done</button>
+      </div>`;
+    // Update slot
+    if (selectedSlot && selectedDay) {
+      const s = classDays[selectedDay]?.[selectedSlot.slotIdx];
+      if (s) { s.spots = Math.max(0, s.spots - 1); if (s.spots === 0) s.booked = true; }
+      selectDay(selectedDay);
+    }
+  }
+  document.getElementById('bookingModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
